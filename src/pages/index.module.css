@@ -114,6 +114,71 @@
   font-weight: 700;
 }
 
+[data-theme='dark'] .heroBanner {
+  background:
+    radial-gradient(circle at 12% 18%, rgba(237, 123, 57, 0.2), transparent 50%),
+    radial-gradient(circle at 88% 12%, rgba(99, 166, 255, 0.24), transparent 48%),
+    linear-gradient(135deg, #121821 0%, #0f1520 52%, #1a1d25 100%);
+}
+
+[data-theme='dark'] .kicker {
+  color: #9fb1c9;
+}
+
+[data-theme='dark'] .heroTitle {
+  color: #edf4ff;
+}
+
+[data-theme='dark'] .heroSubtitle {
+  color: #becde0;
+}
+
+[data-theme='dark'] .statCard {
+  border-color: rgba(159, 177, 201, 0.22);
+  background: rgba(17, 24, 36, 0.76);
+}
+
+[data-theme='dark'] .statTitle {
+  color: #e2ebf8;
+}
+
+[data-theme='dark'] .statBody {
+  color: #b7c6da;
+}
+
+[data-theme='dark'] .sectionTitle {
+  color: #e8f1ff;
+}
+
+[data-theme='dark'] .libraryCard {
+  border-color: rgba(159, 177, 201, 0.26);
+  background: linear-gradient(135deg, #141c29 0%, #101724 100%);
+  box-shadow: 0 12px 28px rgba(5, 8, 14, 0.35);
+}
+
+[data-theme='dark'] .libraryName {
+  color: #e8f1ff;
+}
+
+[data-theme='dark'] .libraryDesc {
+  color: #b8c7db;
+}
+
+[data-theme='dark'] .buttons :global(.button--primary) {
+  box-shadow: 0 10px 20px rgba(8, 24, 44, 0.38);
+}
+
+[data-theme='dark'] .buttons :global(.button--outline) {
+  border-color: rgba(184, 199, 219, 0.5);
+  color: #dbe8f8;
+  background: rgba(14, 20, 30, 0.55);
+}
+
+[data-theme='dark'] .buttons :global(.button--outline:hover) {
+  border-color: rgba(184, 199, 219, 0.8);
+  background: rgba(26, 38, 56, 0.75);
+}
+
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 4.5rem 0 3.25rem;
