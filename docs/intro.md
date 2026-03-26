@@ -2,46 +2,61 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# UnambitiousFx
 
-Let's discover **Docusaurus in less than 5 minutes**.
+UnambitiousFx is a small collection of lightweight, performance-focused .NET libraries.
 
-## Getting Started
+The goal is straightforward: help you build reliable, efficient applications with APIs that stay simple and predictable.
 
-Get started by **creating a new site**.
+## Design Priorities
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- Simplicity over framework-heavy abstractions.
+- Correctness through explicit modeling.
+- Low allocations and practical runtime efficiency.
 
-### What you'll need
+## Libraries
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+### Functional
 
-## Generate a new site
+Functional provides composable primitives for success/failure and optional flows:
 
-Generate a new Docusaurus site using the **classic template**.
+- `Result` and `Result<T>` for explicit operation outcomes.
+- `Maybe<T>` for optional values without scattering null checks.
+- ASP.NET Core integration for HTTP mapping.
+- xUnit helpers for expressive assertions.
 
-The classic template will automatically be added to your project after you run the command:
+Read the Functional docs: [Functional](/docs/functional/)
+
+### Synapse (WIP)
+
+Synapse is a lightweight in-process mediator and message-driven primitive set.
+
+Documentation pages for Synapse are still in progress.
+
+For now, see source, examples, and tests in the repository: [Synapse Folder](https://github.com/unambitiousfx/unambitious/tree/main/Synapse)
+
+## Quick Start
+
+Install Functional:
 
 ```bash
-npm init docusaurus@latest my-website classic
+dotnet add package UnambitiousFx.Functional
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+For ASP.NET Core integration:
 
 ```bash
-cd my-website
-npm run start
+dotnet add package UnambitiousFx.Functional.AspNetCore
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+For xUnit assertions:
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+```bash
+dotnet add package UnambitiousFx.Functional.xunit
+```
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+## Where To Go Next
+
+1. Start with [Functional Overview](/docs/functional/).
+2. Explore [Result](/docs/functional/result/) and [Maybe](/docs/functional/maybe/).
+3. Use [ASP.NET Core integration](/docs/functional/aspnetcore/) for endpoint mapping.

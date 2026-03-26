@@ -40,4 +40,4 @@ Global behavior can be tuned with adapter policy options, for example:
 ## See Also
 
 - [HTTP Mapping Model and Defaults](./http-mapping.md)
-- [Failures and Metadata](../failures-and-metadata.md)
+- [Failures and Metadata](/docs/functional/failures-and-metadata)

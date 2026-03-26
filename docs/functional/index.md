@@ -67,8 +67,8 @@ result.Match(
 
 Follow this path from fundamentals to advanced integration:
 
-1. Read [Result](./result.md) for railway-oriented pipelines.
-2. Read [Maybe](./maybe.md) for optional-value flows.
-3. Read [Failures and Metadata](./failures-and-metadata.md) for error modeling and contextual data.
-4. Read [ASP.NET Core](./aspnetcore/index.md) for HTTP mapping and web API integration.
-5. Read [xUnit](./xunit/index.md) for assertion patterns in tests.
+1. Read [Result](/docs/functional/result/) for railway-oriented pipelines.
+2. Read [Maybe](/docs/functional/maybe/) for optional-value flows.
+3. Read [Failures and Metadata](/docs/functional/failures-and-metadata) for error modeling and contextual data.
+4. Read [ASP.NET Core](/docs/functional/aspnetcore/) for HTTP mapping and web API integration.
+5. Read [xUnit](/docs/functional/xunit/) for assertion patterns in tests.

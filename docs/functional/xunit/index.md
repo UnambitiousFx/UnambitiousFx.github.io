@@ -63,6 +63,6 @@ Use the same `ShouldBe()` pattern after awaiting values in your tests.
 
 ## See Also
 
-- [Result](../result.md)
-- [Maybe](../maybe.md)
-- [Failures and Metadata](../failures-and-metadata.md)
+- [Result](/docs/functional/result/)
+- [Maybe](/docs/functional/maybe/)
+- [Failures and Metadata](/docs/functional/failures-and-metadata)

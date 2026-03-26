@@ -56,7 +56,7 @@ var displayName = GetUser(userId)
 The full API surface has been moved to a dedicated reference page so this guide can stay focused on concepts and
 practical usage.
 
-- [Maybe API Reference](./maybe/api-reference.md)
+- [Maybe API Reference](/docs/functional/maybe/api-reference)
 
 ## Advanced Topics
 
@@ -142,5 +142,5 @@ var profileData =
 
 ## See Also
 
-- [Result](./result.md) - For operations that can fail with errors
-- [Failures and Metadata](./failures-and-metadata.md) - For typed failure modeling and contextual metadata
+- [Result](/docs/functional/result/) - For operations that can fail with errors
+- [Failures and Metadata](/docs/functional/failures-and-metadata) - For typed failure modeling and contextual metadata

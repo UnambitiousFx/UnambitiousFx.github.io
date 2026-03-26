@@ -6,7 +6,8 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'UnambitiousFx',
-  tagline: 'UnambitiousFx',
+  tagline:
+    'A small collection of lightweight, performance-focused .NET libraries built for simplicity, correctness, and low allocations.',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
@@ -75,9 +76,9 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'UnambitiousFx',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'UnambitiousFx Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -85,9 +86,14 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Docs',
         },
-        { to: '/blog', label: 'Blog', position: 'left' },
+        { to: '/docs/functional/', label: 'Functional', position: 'left' },
+        {
+          href: 'https://github.com/unambitiousfx/unambitious/tree/main/Synapse',
+          label: 'Synapse (WIP)',
+          position: 'left',
+        },
         {
           href: 'https://github.com/unambitiousfx/unambitiousfx.github.io',
           label: 'GitHub',
@@ -102,25 +108,25 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
+              label: 'Introduction',
               to: '/docs/intro',
+            },
+            {
+              label: 'Functional',
+              to: '/docs/functional/',
             },
           ],
         },
         {
-          title: 'Community',
+          title: 'Libraries',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'Functional',
+              to: '/docs/functional/',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Synapse (WIP)',
+              href: 'https://github.com/unambitiousfx/unambitious/tree/main/Synapse',
             },
           ],
         },
@@ -128,17 +134,17 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
+              label: 'GitHub',
+              href: 'https://github.com/unambitiousfx/unambitiousfx.github.io',
             },
             {
-              label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              label: 'Main Repository',
+              href: 'https://github.com/unambitiousfx/unambitious',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} UnambitiousFx. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

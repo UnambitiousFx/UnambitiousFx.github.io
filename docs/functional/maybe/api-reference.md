@@ -85,5 +85,5 @@ var output = maybe
 
 ## See Also
 
-- [Maybe](../maybe.md)
-- [Result](../result.md)
+- [Maybe](/docs/functional/maybe/)
+- [Result](/docs/functional/result/)

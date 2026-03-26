@@ -34,5 +34,5 @@ Use `ToCreatedHttpResult` when the success case creates a resource.
 
 ## See Also
 
-- [Result](../result.md)
+- [Result](/docs/functional/result/)
 - [Custom Mappers and Policy Composition](./custom-mappers.md)
