@@ -29,7 +29,7 @@ public sealed class UsersController : ControllerBase
 
 ## Common Use Cases
 
-- Legacy controller-based APIs adopting functional error handling.
+- Legacy controller-based APIs adopting functional failure handling.
 - Mixed codebases using both controller and Minimal API endpoints.
 
 ## See Also

@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Failures and Metadata
 
-Functional uses typed failure objects so error handling is explicit and composable.
+Functional uses typed failure objects so failure handling is explicit and composable.
 
 ## Built-in Failure Types
 
@@ -22,19 +22,19 @@ Common types:
 - `ExceptionalFailure` (wraps exceptions)
 - `AggregateFailure` (multiple failures)
 
-## Error Codes
+## Failure Codes
 
-Standard codes are available in `ErrorCodes`:
+Standard codes are available in `FailureCodes`:
 
-- `ERROR`
-- `EXCEPTION`
-- `AGGREGATE_ERROR`
-- `VALIDATION`
-- `NOT_FOUND`
-- `CONFLICT`
-- `UNAUTHORIZED`
-- `UNAUTHENTICATED`
-- `TIMEOUT`
+- `FailureCodes.Failure`
+- `FailureCodes.Exception`
+- `FailureCodes.AggregateFailure`
+- `FailureCodes.Validation`
+- `FailureCodes.NotFound`
+- `FailureCodes.Conflict`
+- `FailureCodes.Unauthorized`
+- `FailureCodes.Unauthenticated`
+- `FailureCodes.Timeout`
 
 ## Example
 

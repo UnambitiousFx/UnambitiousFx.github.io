@@ -16,7 +16,7 @@ builder.Services.AddResultHttp(options =>
 {
     options.AddMapper<RateLimitFailure>(429);
 
-    options.AddMapper<PaymentRequiredFailure>(failure => new ErrorHttpResponse
+    options.AddMapper<PaymentRequiredFailure>(failure => new FailureHttpResponse
     {
         StatusCode = 402,
         Body = new { message = failure.Message }

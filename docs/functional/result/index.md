@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Result
 
-The `Result` type represents the outcome of an operation that can either succeed or fail with an error. It embodies
+The `Result` type represents the outcome of an operation that can either succeed or fail with a failure object. It embodies
 railway-oriented programming, providing a type-safe alternative to exceptions for control flow.
 
 ## Table of Contents
@@ -158,7 +158,7 @@ return GetUser(id)
     .WithMetadata("Timestamp", DateTime.UtcNow);
 ```
 
-### 4. Handle Errors at Boundaries
+### 4. Handle Failures at Boundaries
 
 Keep most code using `Result`, convert to exceptions only at system boundaries:
 
@@ -169,11 +169,11 @@ public IActionResult GetUser(string id)
     return GetUserById(id)
         .Match(
             success: user => Ok(user),
-            failure: error => error switch
+            failure: failure => failure switch
             {
-                NotFoundFailure => NotFound(error.Message),
-                ValidationFailure => BadRequest(error.Message),
-                _ => StatusCode(500, error.Message)
+                NotFoundFailure => NotFound(failure.Message),
+                ValidationFailure => BadRequest(failure.Message),
+                _ => StatusCode(500, failure.Message)
             }
         );
 }
@@ -199,7 +199,7 @@ Don't break the chain for logging or other side effects:
 var result = GetUser(id)
     .Tap(user => _logger.LogInformation("User loaded: {Id}", user.Id))
     .Map(user => user.ToDto())
-    .TapError(error => _logger.LogError("Failed: {Error}", error.Message));
+    .TapFailure(failure => _logger.LogError("Failed: {Error}", failure.Message));
 ```
 
 ### 7. Compensate for Transactional Rollbacks
@@ -209,7 +209,7 @@ Use `Compensate` for saga patterns or compensating transactions:
 ```csharp
 var result = ReserveInventory(productId, quantity)
     .Bind(() => ChargePayment(amount))
-    .Compensate(error => ReleaseInventory(productId, quantity));
+    .Compensate(failure => ReleaseInventory(productId, quantity));
 ```
 
 ### 8. Combine for Parallel Operations

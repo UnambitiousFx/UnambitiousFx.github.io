@@ -18,7 +18,7 @@ public readonly partial record struct Result : IResult
 
 ### `Result<TValue>`
 
-A generic result representing success with a value or failure with an error.
+A generic result representing success with a value or failure with a failure object.
 
 ```csharp
 public readonly partial record struct Result<TValue> : IResult
@@ -32,8 +32,8 @@ public readonly partial record struct Result<TValue> : IResult
 | `IsSuccess`                                     | Indicates whether the operation succeeded                               |
 | `IsFailure`                                     | Indicates whether the operation failed                                  |
 | `Metadata`                                      | Associated metadata                                                     |
-| `TryGetError(out Failure? error)`               | Attempts to extract the error if failed                                 |
-| `TryGet(out TValue? value, out Failure? error)` | Attempts to extract the success value and error (`Result<TValue>` only) |
+| `TryGetFailure(out Failure? failure)`           | Attempts to extract the failure if failed                               |
+| `TryGet(out TValue? value, out Failure? failure)` | Attempts to extract the success value and failure (`Result<TValue>` only) |
 | `TryGetValue(out TValue? value)`                | Attempts to extract the success value (`Result<TValue>` only)           |
 | `Match(success, failure)`                       | Pattern matches the result                                              |
 | `Switch(success, failure)`                      | Executes actions based on state                                         |
@@ -52,7 +52,7 @@ public readonly partial record struct Result<TValue> : IResult
 - `Then`
 - `Flatten`
 
-### Error Handling
+### Failure Handling
 
 - `Recover`
 - `Compensate`
@@ -63,7 +63,7 @@ public readonly partial record struct Result<TValue> : IResult
 
 - `Tap`
 - `TapIf`
-- `TapError`
+- `TapFailure`
 - `ValueOr`
 - `ValueOrDefault`
 - `ValueOrThrow`
@@ -114,7 +114,7 @@ Result<int> b = 42;
 ```csharp
 var text = result.Match(
     success: value => value.ToString(),
-    failure: error => $"Error: {error.Message}"
+    failure: failure => $"Failure: {failure.Message}"
 );
 ```
 
