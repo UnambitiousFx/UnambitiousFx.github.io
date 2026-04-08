@@ -41,4 +41,4 @@ public void FindUser_UnknownUser_ReturnsNone()
 ## See Also
 
 - [Result Assertion Patterns](./result-assertions.md)
-- [Maybe](/docs/functional/maybe/)
+- [Maybe](/lib-functional/v2.0/maybe/)

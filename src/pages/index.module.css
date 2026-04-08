@@ -114,6 +114,39 @@
   font-weight: 700;
 }
 
+.featuresSection {
+  padding: 3rem 0 2.5rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(14, 111, 219, 0.03) 100%);
+}
+
+.featuresGrid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.featureCard {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem;
+  background: #ffffff;
+}
+
+.featureTitle {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #102438;
+}
+
+.featureBody {
+  margin: 0.6rem 0 0;
+  color: #3b4f68;
+  line-height: 1.65;
+  font-size: 0.95rem;
+}
+
 [data-theme='dark'] .heroBanner {
   background:
     radial-gradient(circle at 12% 18%, rgba(237, 123, 57, 0.2), transparent 50%),
@@ -179,6 +212,23 @@
   background: rgba(26, 38, 56, 0.75);
 }
 
+[data-theme='dark'] .featuresSection {
+  background: linear-gradient(180deg, transparent 0%, rgba(99, 166, 255, 0.03) 100%);
+}
+
+[data-theme='dark'] .featureCard {
+  border-color: rgba(159, 177, 201, 0.22);
+  background: #141c29;
+}
+
+[data-theme='dark'] .featureTitle {
+  color: #e2ebf8;
+}
+
+[data-theme='dark'] .featureBody {
+  color: #b8c7db;
+}
+
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 4.5rem 0 3.25rem;
@@ -189,6 +239,10 @@
   }
 
   .libraryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featuresGrid {
     grid-template-columns: 1fr;
   }
 }

@@ -2,61 +2,83 @@
 sidebar_position: 1
 ---
 
-# UnambitiousFx
+# Getting Started
 
-UnambitiousFx is a small collection of lightweight, performance-focused .NET libraries.
+UnambitiousFx is a collection of lightweight, modular .NET libraries designed to simplify web API development — with Native AOT support and zero unnecessary overhead.
 
-The goal is straightforward: help you build reliable, efficient applications with APIs that stay simple and predictable.
+## Install
 
-## Design Priorities
+Pick only what you need:
 
-- Simplicity over framework-heavy abstractions.
-- Correctness through explicit modeling.
-- Low allocations and practical runtime efficiency.
+```bash
+# Core functional primitives
+dotnet add package UnambitiousFx.Functional
+
+# ASP.NET Core integration (optional)
+dotnet add package UnambitiousFx.Functional.AspNetCore
+
+# xUnit assertion helpers (optional)
+dotnet add package UnambitiousFx.Functional.xunit
+```
+
+## Quick Example
+
+Model an operation that can fail without using exceptions:
+
+```csharp
+using UnambitiousFx.Functional;
+using UnambitiousFx.Functional.Failures;
+
+static Result<int> ParsePositiveInt(string input)
+{
+    if (!int.TryParse(input, out var value))
+        return Result.FailValidation<int>("Input is not a valid integer");
+
+    if (value <= 0)
+        return Result.FailValidation<int>("Value must be positive");
+
+    return Result.Success(value);
+}
+
+var result = ParsePositiveInt("42")
+    .Map(value => value * 2)
+    .Ensure(value => value < 100, _ => new ValidationFailure("Value must be less than 100"));
+
+result.Match(
+    success: value => Console.WriteLine($"Result: {value}"),
+    failure: error  => Console.WriteLine($"Error: {error.Code} — {error.Message}")
+);
+```
+
+Errors are values. Pipelines stay linear. No exceptions for control flow.
+
+## Core Concepts
+
+| Concept                   | What it does                                  |
+| ------------------------- | --------------------------------------------- |
+| `Result` / `Result<T>`    | Explicit success/failure without exceptions   |
+| `Maybe<T>`                | Optional values without scattered null checks |
+| `Bind` / `Map` / `Ensure` | Composable pipeline operations                |
+| `Recover` / `Tap`         | Side-effects and fallback paths               |
 
 ## Libraries
 
 ### Functional
 
-Functional provides composable primitives for success/failure and optional flows:
+Functional programming primitives for explicit, composable .NET workflows.
 
-- `Result` and `Result<T>` for explicit operation outcomes.
-- `Maybe<T>` for optional values without scattering null checks.
-- ASP.NET Core integration for HTTP mapping.
-- xUnit helpers for expressive assertions.
+→ [Functional docs](/lib-functional/) — versions, full API reference, ASP.NET Core and xUnit integration.
 
-Read the Functional docs: [Functional](/docs/functional/)
+### Synapse *(work in progress)*
 
-### Synapse (WIP)
+A lightweight in-process mediator and message-driven primitive set.
 
-Synapse is a lightweight in-process mediator and message-driven primitive set.
+→ [Synapse on GitHub](https://github.com/unambitiousfx/unambitious/tree/main/Synapse) — source, examples, and tests.
 
-Documentation pages for Synapse are still in progress.
+## What to Read Next
 
-For now, see source, examples, and tests in the repository: [Synapse Folder](https://github.com/unambitiousfx/unambitious/tree/main/Synapse)
+1. [Result](/lib-functional/v2.0/result/) — railway-oriented pipelines.
+2. [Maybe](/lib-functional/v2.0/maybe/) — optional-value flows.
+3. [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata) — structured error modeling.
+4. [ASP.NET Core integration](/lib-functional/v2.0/aspnetcore/) — HTTP mapping for endpoints.
 
-## Quick Start
-
-Install Functional:
-
-```bash
-dotnet add package UnambitiousFx.Functional
-```
-
-For ASP.NET Core integration:
-
-```bash
-dotnet add package UnambitiousFx.Functional.AspNetCore
-```
-
-For xUnit assertions:
-
-```bash
-dotnet add package UnambitiousFx.Functional.xunit
-```
-
-## Where To Go Next
-
-1. Start with [Functional Overview](/docs/functional/).
-2. Explore [Result](/docs/functional/result/) and [Maybe](/docs/functional/maybe/).
-3. Use [ASP.NET Core integration](/docs/functional/aspnetcore/) for endpoint mapping.

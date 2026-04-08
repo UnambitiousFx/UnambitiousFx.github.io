@@ -86,6 +86,6 @@ Built-in failure mappings:
 
 ## See Also
 
-- [Result](/docs/functional/result/)
-- [Maybe](/docs/functional/maybe/)
-- [Failures and Metadata](/docs/functional/failures-and-metadata)
+- [Result](/lib-functional/v2.0/result/)
+- [Maybe](/lib-functional/v2.0/maybe/)
+- [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata)

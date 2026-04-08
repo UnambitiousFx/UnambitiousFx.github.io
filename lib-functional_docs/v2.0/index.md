@@ -67,8 +67,9 @@ result.Match(
 
 Follow this path from fundamentals to advanced integration:
 
-1. Read [Result](/docs/functional/result/) for railway-oriented pipelines.
-2. Read [Maybe](/docs/functional/maybe/) for optional-value flows.
-3. Read [Failures and Metadata](/docs/functional/failures-and-metadata) for error modeling and contextual data.
-4. Read [ASP.NET Core](/docs/functional/aspnetcore/) for HTTP mapping and web API integration.
-5. Read [xUnit](/docs/functional/xunit/) for assertion patterns in tests.
+1. Read [Migration from v1](./migration-from-v1) if you are upgrading.
+2. Read [Result](/lib-functional/v2.0/result/) for railway-oriented pipelines.
+3. Read [Maybe](/lib-functional/v2.0/maybe/) for optional-value flows.
+4. Read [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata) for error modeling and contextual data.
+5. Read [ASP.NET Core](/lib-functional/v2.0/aspnetcore/) for HTTP mapping and web API integration.
+6. Read [xUnit](/lib-functional/v2.0/xunit/) for assertion patterns in tests.

@@ -44,4 +44,4 @@ public void Parse_InvalidValue_ReturnsValidationFailure()
 ## See Also
 
 - [Maybe Assertion Patterns](./maybe-assertions.md)
-- [Result](/docs/functional/result/)
+- [Result](/lib-functional/v2.0/result/)

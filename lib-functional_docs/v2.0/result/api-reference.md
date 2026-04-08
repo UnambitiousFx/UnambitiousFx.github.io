@@ -120,5 +120,5 @@ var text = result.Match(
 
 ## See Also
 
-- [Result](/docs/functional/result/)
-- [Failures and Metadata](/docs/functional/failures-and-metadata)
+- [Result](/lib-functional/v2.0/result/)
+- [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata)

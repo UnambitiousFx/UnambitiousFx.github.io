@@ -1,19 +1,23 @@
-import { themes as prismThemes } from 'prism-react-renderer';
-import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
   title: 'UnambitiousFx',
   tagline:
-    'A small collection of lightweight, performance-focused .NET libraries built for simplicity, correctness, and low allocations.',
+    'A collection of lightweight, modular .NET libraries designed to simplify web API development — with Native AOT support and zero unnecessary overhead.',
   favicon: 'img/favicon.ico',
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
 
   // Set the production url of your site here
   url: 'https://unambitiousfx.com',
@@ -41,7 +45,9 @@ const config: Config = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
+          path: 'docs',
+          routeBasePath: 'docs',
+          sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
@@ -69,6 +75,31 @@ const config: Config = {
     ],
   ],
 
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'lib-functional',
+        path: 'lib-functional_docs',
+        routeBasePath: 'lib-functional',
+        sidebarPath: './sidebarsLibFunctional.js',
+        editUrl:
+          'https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/',
+      },
+    ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'lib-synapse',
+        path: 'lib-synapse_docs',
+        routeBasePath: 'lib-synapse',
+        sidebarPath: './sidebarsLibSynapse.js',
+        editUrl:
+          'https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/',
+      },
+    ],
+  ],
+
   themeConfig: {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
@@ -86,15 +117,24 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
+          docsPluginId: 'default',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Docs',
+          label: 'Get Started',
         },
-        { to: '/docs/functional/', label: 'Functional', position: 'left' },
         {
-          href: 'https://github.com/unambitiousfx/unambitious/tree/main/Synapse',
-          label: 'Synapse (WIP)',
+          label: 'Libraries',
           position: 'left',
+          items: [
+            {
+              label: 'Functional',
+              to: '/lib-functional/',
+            },
+            {
+              label: 'Synapse',
+              to: '/lib-synapse/',
+            },
+          ],
         },
         {
           href: 'https://github.com/unambitiousfx/unambitiousfx.github.io',
@@ -107,28 +147,15 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
-          items: [
-            {
-              label: 'Introduction',
-              to: '/docs/intro',
-            },
-            {
-              label: 'Functional',
-              to: '/docs/functional/',
-            },
-          ],
-        },
-        {
           title: 'Libraries',
           items: [
             {
               label: 'Functional',
-              to: '/docs/functional/',
+              to: '/lib-functional/',
             },
             {
-              label: 'Synapse (WIP)',
-              href: 'https://github.com/unambitiousfx/unambitious/tree/main/Synapse',
+              label: 'Synapse',
+              to: '/lib-synapse/',
             },
           ],
         },

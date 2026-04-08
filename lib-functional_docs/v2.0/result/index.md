@@ -49,7 +49,7 @@ var result = ParsePositive("42")
 The full API surface has been moved to a dedicated reference page so this guide can stay focused on concepts and
 usage patterns.
 
-- [Result API Reference](/docs/functional/result/api-reference)
+- [Result API Reference](./api-reference)
 
 ## Advanced Topics
 
@@ -257,7 +257,7 @@ public Result<User> CreateUser(string name)
 
 ## See Also
 
-- [Maybe](/docs/functional/maybe/)
-- [Failures and Metadata](/docs/functional/failures-and-metadata)
-- [ASP.NET Core Integration](/docs/functional/aspnetcore/)
-- [xUnit Integration](/docs/functional/xunit/)
+- [Maybe](/lib-functional/v2.0/maybe/)
+- [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata)
+- [ASP.NET Core Integration](/lib-functional/v2.0/aspnetcore/)
+- [xUnit Integration](/lib-functional/v2.0/xunit/)

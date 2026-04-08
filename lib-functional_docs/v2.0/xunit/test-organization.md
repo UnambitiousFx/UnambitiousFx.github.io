@@ -29,5 +29,5 @@ Group tests by behavior and expected outcome:
 
 ## See Also
 
-- [Failures and Metadata](/docs/functional/failures-and-metadata)
+- [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata)
 - [Async Assertion Patterns](./async-assertions.md)
