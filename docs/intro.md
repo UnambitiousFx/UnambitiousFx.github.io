@@ -52,8 +52,7 @@ dotnet add package UnambitiousFx.Functional.xunit
 
 For all UnambitiousFx libraries:
 
-- Stable versions are available on [NuGet.org](https://www.nuget.org/).
-- Pre-release versions are available on [MyGet](https://www.myget.org/F/unambitiousfx/api/v3/index.json).
+- See [Package Feeds](/docs/package-feeds) for stable and pre-release package sources, including custom feed setup.
 
 ## Navigate by Goal
 

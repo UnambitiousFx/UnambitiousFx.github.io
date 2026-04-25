@@ -32,11 +32,6 @@ dotnet add package UnambitiousFx.Functional.AspNetCore
 dotnet add package UnambitiousFx.Functional.xunit
 ```
 
-Release channels for all UnambitiousFx libraries:
-
-- Stable versions are available on [NuGet.org](https://www.nuget.org/).
-- Pre-release versions are available on [MyGet](https://www.myget.org/F/unambitiousfx/api/v3/index.json).
-
 ## Typical Pipeline
 
 ```csharp

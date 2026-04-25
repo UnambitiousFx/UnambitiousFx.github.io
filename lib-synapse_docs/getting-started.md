@@ -18,11 +18,6 @@ For web API projects, also install the ASP.NET Core integration layer:
 dotnet add package UnambitiousFx.Synapse.AspNetCore
 ```
 
-Release channels for all UnambitiousFx libraries:
-
-- Stable versions are available on [NuGet.org](https://www.nuget.org/).
-- Pre-release versions are available on [MyGet](https://www.myget.org/F/unambitiousfx/api/v3/index.json).
-
 ## Register Synapse
 
 Call `AddSynapse` in your `Program.cs` or `Startup.cs`:
