@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Synapse (v1.0)
+# Synapse
 
 UnambitiousFx.Synapse is a lightweight, high-performance, in-process mediator for .NET. It routes commands, queries, and events through a structured pipeline with zero reflection at runtime.
 

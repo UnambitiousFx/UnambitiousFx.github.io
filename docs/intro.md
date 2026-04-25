@@ -77,8 +77,8 @@ A lightweight in-process mediator and message-driven primitive set.
 
 ## What to Read Next
 
-1. [Result](/lib-functional/v2.0/result/) — railway-oriented pipelines.
-2. [Maybe](/lib-functional/v2.0/maybe/) — optional-value flows.
-3. [Failures and Metadata](/lib-functional/v2.0/failures-and-metadata) — structured error modeling.
-4. [ASP.NET Core integration](/lib-functional/v2.0/aspnetcore/) — HTTP mapping for endpoints.
+1. [Result](/lib-functional/result/) — railway-oriented pipelines.
+2. [Maybe](/lib-functional/maybe/) — optional-value flows.
+3. [Failures and Metadata](/lib-functional/failures-and-metadata) — structured error modeling.
+4. [ASP.NET Core integration](/lib-functional/aspnetcore/) — HTTP mapping for endpoints.
 

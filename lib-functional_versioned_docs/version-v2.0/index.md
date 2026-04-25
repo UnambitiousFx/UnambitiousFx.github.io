@@ -1,8 +1,8 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-# Functional
+# Get Started
 
 UnambitiousFx.Functional is a lightweight functional programming toolkit for .NET.
 
