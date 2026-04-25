@@ -2,7 +2,10 @@
   // This file is not used in compilation. It is here just for a nice editor experience.
   "extends": "@docusaurus/tsconfig",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@theme/DocSidebar/versioning": ["src/theme/DocSidebar/versioning.ts"]
+    }
   },
   "exclude": [".docusaurus", "build"]
 }
