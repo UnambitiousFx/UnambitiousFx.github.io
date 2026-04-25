@@ -50,6 +50,11 @@ dotnet add package UnambitiousFx.Functional.AspNetCore
 dotnet add package UnambitiousFx.Functional.xunit
 ```
 
+For all UnambitiousFx libraries:
+
+- Stable versions are available on [NuGet.org](https://www.nuget.org/).
+- Pre-release versions are available on [MyGet](https://www.myget.org/F/unambitiousfx/api/v3/index.json).
+
 ## Navigate by Goal
 
 | Goal                                      | Go to                                                          |
