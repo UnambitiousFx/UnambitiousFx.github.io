@@ -161,7 +161,7 @@ const config: Config = {
       title: "UnambitiousFx",
       logo: {
         alt: "UnambitiousFx Logo",
-        src: "img/logo.svg",
+        src: "img/unambitiousfx_logo.svg",
       },
       items: [
         {
