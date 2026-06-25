@@ -1,37 +1,86 @@
+/* ── Hero ─────────────────────────────────────────────────────────────────── */
 .heroBanner {
   position: relative;
-  padding: 6rem 0 4rem;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(237, 123, 57, 0.18), transparent 48%),
-    radial-gradient(circle at 90% 10%, rgba(14, 111, 219, 0.2), transparent 46%),
-    linear-gradient(135deg, #f7f2eb 0%, #eef3fb 45%, #f8efe6 100%);
+  padding: 6rem 0 4.5rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f7f2eb 0%, #eef3fb 48%, #f8efe6 100%);
+}
+
+/* Animated colour blobs */
+.heroBanner::before,
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.heroBanner::before {
+  width: 72%;
+  height: 72%;
+  background: radial-gradient(circle, rgba(237, 123, 57, 0.22) 0%, transparent 65%);
+  top: -22%;
+  left: -12%;
+}
+
+.heroBanner::after {
+  width: 64%;
+  height: 64%;
+  background: radial-gradient(circle, rgba(14, 111, 219, 0.22) 0%, transparent 65%);
+  top: -20%;
+  right: -10%;
 }
 
 .heroContainer {
+  position: relative;
+  z-index: 1;
   text-align: center;
 }
 
-.kicker {
-  margin: 0;
-  letter-spacing: 0.16em;
-  font-size: 0.78rem;
-  color: #435165;
+/* Kicker badge */
+.kickerBadge {
+  display: inline-block;
+  padding: 0.28rem 0.85rem;
+  background: rgba(12, 103, 213, 0.09);
+  border: 1px solid rgba(12, 103, 213, 0.22);
+  border-radius: 100px;
+  font-size: 0.72rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #0c67d5;
+  margin-bottom: 0.9rem;
 }
 
+/* Gradient title */
 .heroTitle {
-  margin: 0.65rem 0 0;
-  font-size: clamp(2.6rem, 7.5vw, 5.2rem);
-  color: #11253d;
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 6rem);
   line-height: 0.95;
 }
 
+.gradientText {
+  background: linear-gradient(135deg, #0c67d5 20%, #ed7b39 88%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Catch phrase */
+.catchPhrase {
+  margin: 1rem auto 0;
+  font-size: clamp(1.15rem, 2.8vw, 1.5rem);
+  font-weight: 700;
+  color: #11253d;
+  letter-spacing: -0.01em;
+}
+
 .heroSubtitle {
-  margin: 1.1rem auto 0;
+  margin: 0.8rem auto 0;
   max-width: 62ch;
-  font-size: 1.08rem;
-  color: #32445d;
-  line-height: 1.6;
+  font-size: 1.05rem;
+  color: #3d5268;
+  line-height: 1.65;
 }
 
 .buttons {
@@ -42,8 +91,9 @@
   flex-wrap: wrap;
 }
 
+/* Stat grid */
 .statGrid {
-  margin-top: 2.3rem;
+  margin-top: 2.5rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.9rem;
@@ -51,12 +101,12 @@
 
 .statCard {
   position: relative;
-  overflow: hidden;
   border: 1px solid rgba(17, 37, 61, 0.12);
   border-radius: 14px;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(6px);
+  padding: 1.1rem 1.2rem;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(8px);
+  text-align: left;
 }
 
 .statTitle {
@@ -69,68 +119,61 @@
 .statBody {
   margin: 0.4rem 0 0;
   color: #42566f;
-  font-size: 0.94rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
-.librariesSection {
-  padding: 2.5rem 0 4rem;
-}
-
+/* ── Section shared ───────────────────────────────────────────────────────── */
 .sectionTitle {
   color: #11253d;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
 }
 
-.libraryGrid {
-  margin-top: 1.2rem;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.libraryCard {
-  border: 1px solid var(--ifm-color-emphasis-300);
-  border-radius: 16px;
-  padding: 1.25rem;
-  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow: 0 10px 24px rgba(23, 40, 68, 0.06);
-}
-
-.libraryName {
-  margin: 0;
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #102438;
-}
-
-.libraryDesc {
-  margin: 0.65rem 0 0;
-  color: #3b4f68;
-}
-
-.libraryLink {
-  margin-top: 1rem;
-  display: inline-block;
-  font-weight: 700;
-}
-
+/* ── Features ─────────────────────────────────────────────────────────────── */
 .featuresSection {
-  padding: 3rem 0 2.5rem;
+  padding: 4rem 0 2.5rem;
   background: linear-gradient(180deg, transparent 0%, rgba(14, 111, 219, 0.03) 100%);
 }
 
 .featuresGrid {
-  margin-top: 1.5rem;
+  margin-top: 1.75rem;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
 .featureCard {
+  position: relative;
+  overflow: hidden;
   border: 1px solid var(--ifm-color-emphasis-200);
   border-radius: 14px;
   padding: 1.4rem 1.5rem;
   background: #ffffff;
+}
+
+/* Left accent bar — grows on hover */
+.featureCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, #0c67d5, #ed7b39);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  border-radius: 0 2px 2px 0;
+}
+
+.featureIndex {
+  display: block;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+  opacity: 0.6;
 }
 
 .featureTitle {
@@ -147,19 +190,98 @@
   font-size: 0.95rem;
 }
 
+/* ── Libraries ────────────────────────────────────────────────────────────── */
+.librariesSection {
+  padding: 2.5rem 0 5rem;
+}
+
+.libraryGrid {
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.libraryCard {
+  position: relative;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 10px 24px rgba(23, 40, 68, 0.06);
+}
+
+.libraryNameRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.libraryName {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #102438;
+}
+
+.libraryDesc {
+  margin: 0.65rem 0 0;
+  color: #3b4f68;
+  line-height: 1.6;
+}
+
+.libraryLink {
+  margin-top: 1.1rem;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.arrow {
+  display: inline-block;
+}
+
+.wipBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.48rem;
+  background: rgba(237, 123, 57, 0.12);
+  border: 1px solid rgba(237, 123, 57, 0.35);
+  border-radius: 100px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #b85a12;
+}
+
+/* ── Dark theme ───────────────────────────────────────────────────────────── */
 [data-theme='dark'] .heroBanner {
-  background:
-    radial-gradient(circle at 12% 18%, rgba(237, 123, 57, 0.2), transparent 50%),
-    radial-gradient(circle at 88% 12%, rgba(99, 166, 255, 0.24), transparent 48%),
-    linear-gradient(135deg, #121821 0%, #0f1520 52%, #1a1d25 100%);
+  background: linear-gradient(135deg, #121821 0%, #0f1520 52%, #1a1d25 100%);
 }
 
-[data-theme='dark'] .kicker {
-  color: #9fb1c9;
+[data-theme='dark'] .heroBanner::before {
+  background: radial-gradient(circle, rgba(237, 123, 57, 0.22) 0%, transparent 65%);
 }
 
-[data-theme='dark'] .heroTitle {
-  color: #edf4ff;
+[data-theme='dark'] .heroBanner::after {
+  background: radial-gradient(circle, rgba(99, 166, 255, 0.26) 0%, transparent 65%);
+}
+
+[data-theme='dark'] .kickerBadge {
+  background: rgba(99, 166, 255, 0.11);
+  border-color: rgba(99, 166, 255, 0.28);
+  color: #63a6ff;
+}
+
+[data-theme='dark'] .gradientText {
+  background: linear-gradient(135deg, #63a6ff 15%, #ed8a47 90%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+[data-theme='dark'] .catchPhrase {
+  color: #ddeeff;
 }
 
 [data-theme='dark'] .heroSubtitle {
@@ -183,35 +305,6 @@
   color: #e8f1ff;
 }
 
-[data-theme='dark'] .libraryCard {
-  border-color: rgba(159, 177, 201, 0.26);
-  background: linear-gradient(135deg, #141c29 0%, #101724 100%);
-  box-shadow: 0 12px 28px rgba(5, 8, 14, 0.35);
-}
-
-[data-theme='dark'] .libraryName {
-  color: #e8f1ff;
-}
-
-[data-theme='dark'] .libraryDesc {
-  color: #b8c7db;
-}
-
-[data-theme='dark'] .buttons :global(.button--primary) {
-  box-shadow: 0 10px 20px rgba(8, 24, 44, 0.38);
-}
-
-[data-theme='dark'] .buttons :global(.button--outline) {
-  border-color: rgba(184, 199, 219, 0.5);
-  color: #dbe8f8;
-  background: rgba(14, 20, 30, 0.55);
-}
-
-[data-theme='dark'] .buttons :global(.button--outline:hover) {
-  border-color: rgba(184, 199, 219, 0.8);
-  background: rgba(26, 38, 56, 0.75);
-}
-
 [data-theme='dark'] .featuresSection {
   background: linear-gradient(180deg, transparent 0%, rgba(99, 166, 255, 0.03) 100%);
 }
@@ -229,6 +322,165 @@
   color: #b8c7db;
 }
 
+[data-theme='dark'] .libraryCard {
+  border-color: rgba(159, 177, 201, 0.26);
+  background: linear-gradient(135deg, #141c29 0%, #101724 100%);
+  box-shadow: 0 12px 28px rgba(5, 8, 14, 0.35);
+}
+
+[data-theme='dark'] .libraryName {
+  color: #e8f1ff;
+}
+
+[data-theme='dark'] .libraryDesc {
+  color: #b8c7db;
+}
+
+[data-theme='dark'] .wipBadge {
+  color: #e07b3a;
+  background: rgba(237, 123, 57, 0.15);
+  border-color: rgba(237, 123, 57, 0.4);
+}
+
+[data-theme='dark'] .buttons :global(.button--primary) {
+  box-shadow: 0 10px 20px rgba(8, 24, 44, 0.38);
+}
+
+[data-theme='dark'] .buttons :global(.button--outline) {
+  border-color: rgba(184, 199, 219, 0.5);
+  color: #dbe8f8;
+  background: rgba(14, 20, 30, 0.55);
+}
+
+[data-theme='dark'] .buttons :global(.button--outline:hover) {
+  border-color: rgba(184, 199, 219, 0.8);
+  background: rgba(26, 38, 56, 0.75);
+}
+
+/* ── Scroll reveal ────────────────────────────────────────────────────────── */
+/* Attribute selectors are not scoped by CSS Modules — intentionally global  */
+[data-reveal] {
+  opacity: 0;
+}
+
+[data-reveal][data-revealed] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition: opacity 0.6s ease calc(var(--delay, 0) * 110ms);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+  }
+}
+
+/* ── Motion (all animations + transitions) ────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Blob drift */
+  .heroBanner::before {
+    animation: blobDrift1 20s ease-in-out infinite alternate;
+  }
+  .heroBanner::after {
+    animation: blobDrift2 24s ease-in-out infinite alternate;
+  }
+
+  @keyframes blobDrift1 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(9%, 14%) scale(1.18); }
+  }
+
+  @keyframes blobDrift2 {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(-7%, 10%) scale(1.22); }
+  }
+
+  /* Gradient title shimmer */
+  .gradientText {
+    animation: shimmer 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes shimmer {
+    from { background-position: 0% 50%; }
+    to   { background-position: 100% 50%; }
+  }
+
+  /* Stat card stagger fade-up */
+  .statCard {
+    animation: fadeUp 0.65s ease both;
+    animation-delay: calc(var(--delay, 0) * 130ms + 200ms);
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Stat card hover */
+  .statCard {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .statCard:hover {
+    transform: translateY(-3px);
+    border-color: rgba(12, 103, 213, 0.28);
+    box-shadow: 0 8px 24px rgba(12, 103, 213, 0.1);
+  }
+
+  /* Feature card hover + accent bar */
+  .featureCard {
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+
+  .featureCard::before {
+    transition: transform 0.32s ease;
+  }
+
+  .featureCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(23, 40, 68, 0.12);
+    border-color: rgba(12, 103, 213, 0.28);
+  }
+
+  .featureCard:hover::before {
+    transform: scaleY(1);
+  }
+
+  /* Library card glow border on hover */
+  .libraryCard {
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+  }
+
+  .libraryCard:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 2px var(--ifm-color-primary),
+      0 16px 40px rgba(12, 103, 213, 0.14);
+  }
+
+  /* Arrow nudge on link hover */
+  .arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .libraryLink:hover .arrow {
+    transform: translateX(5px);
+  }
+
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 4.5rem 0 3.25rem;

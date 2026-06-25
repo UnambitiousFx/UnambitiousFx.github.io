@@ -14,10 +14,6 @@ const config: Config = {
   future: {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
-  markdown: {
-    mermaid: true,
-  },
-  themes: ["@docusaurus/theme-mermaid"],
 
   // Set the production url of your site here
   url: "https://unambitiousfx.com",
@@ -44,108 +40,12 @@ const config: Config = {
     [
       "classic",
       {
-        docs: {
-          path: "docs",
-          routeBasePath: "docs",
-          sidebarPath: "./sidebars.js",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/",
-        },
-        blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ["rss", "atom"],
-            xslt: true,
-          },
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/",
-          // Useful options to enforce blogging best practices
-          onInlineTags: "warn",
-          onInlineAuthors: "warn",
-          onUntruncatedBlogPosts: "warn",
-        },
+        docs: false,
+        blog: false,
         theme: {
           customCss: "./src/css/custom.css",
         },
       } satisfies Preset.Options,
-    ],
-  ],
-
-  plugins: [
-    [
-      "@docusaurus/plugin-content-docs",
-      {
-        id: "lib-functional",
-        path: "lib-functional_docs",
-        routeBasePath: "lib-functional",
-        includeCurrentVersion: false,
-        lastVersion: "v2.0",
-        versions: {
-          "v2.0": {
-            label: "v2.0",
-          },
-          "v1.0": {
-            label: "v1.0",
-          },
-        },
-        sidebarPath: "./sidebarsLibFunctional.js",
-        editUrl:
-          "https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/",
-      },
-    ],
-    [
-      "@docusaurus/plugin-content-docs",
-      {
-        id: "lib-synapse",
-        path: "lib-synapse_docs",
-        routeBasePath: "lib-synapse",
-        includeCurrentVersion: false,
-        lastVersion: "v1.0",
-        versions: {
-          "v1.0": {
-            label: "v1.0 (pre-release)",
-            banner: "unreleased",
-          },
-        },
-        sidebarPath: "./sidebarsLibSynapse.js",
-        editUrl:
-          "https://github.com/unambitiousfx/unambitiousfx.github.io/tree/main/",
-      },
-    ],
-    [
-      "@docusaurus/plugin-client-redirects",
-      {
-        createRedirects(existingPath) {
-          if (
-            existingPath.startsWith("/lib-functional/v1.0") ||
-            existingPath.startsWith("/lib-functional/v2.0")
-          ) {
-            return undefined;
-          }
-
-          if (existingPath.startsWith("/lib-functional/")) {
-            return [
-              existingPath.replace("/lib-functional/", "/lib-functional/v2.0/"),
-            ];
-          }
-
-          if (existingPath.startsWith("/lib-synapse/v1.0")) {
-            return undefined;
-          }
-
-          if (existingPath.startsWith("/lib-synapse/")) {
-            return [
-              existingPath.replace("/lib-synapse/", "/lib-synapse/v1.0/"),
-            ];
-          }
-
-          return undefined;
-        },
-      },
     ],
   ],
 
@@ -165,27 +65,14 @@ const config: Config = {
       },
       items: [
         {
-          type: "docSidebar",
-          docsPluginId: "default",
-          sidebarId: "tutorialSidebar",
-          position: "left",
-          label: "Get Started",
-        },
-        {
-          type: "docSidebar",
+          href: "https://functional.unambitiousfx.com",
           label: "Functional",
-          docsPluginId: "lib-functional",
-          sidebarId: "libFunctionalSidebar",
           position: "left",
-          to: "/lib-functional/",
         },
         {
-          type: "docSidebar",
+          href: "https://synapse.unambitiousfx.com",
           label: "Synapse",
-          docsPluginId: "lib-synapse",
-          sidebarId: "libSynapseSidebar",
           position: "left",
-          to: "/lib-synapse/",
         },
         {
           href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
@@ -202,11 +89,11 @@ const config: Config = {
           items: [
             {
               label: "Functional",
-              to: "/lib-functional/",
+              href: "https://functional.unambitiousfx.com",
             },
             {
               label: "Synapse",
-              to: "/lib-synapse/",
+              href: "https://synapse.unambitiousfx.com",
             },
           ],
         },
