@@ -122,11 +122,7 @@ const config: Config = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
-            },
-            {
-              label: "Main Repository",
-              href: "https://github.com/unambitiousfx/unambitious",
+              href: "https://github.com/unambitiousfx",
             },
           ],
         },
