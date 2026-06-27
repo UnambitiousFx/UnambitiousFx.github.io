@@ -36,6 +36,25 @@ const config: Config = {
     locales: ["en"],
   },
 
+  headTags: [
+    {
+      tagName: "link",
+      attributes: {
+        rel: "icon",
+        type: "image/svg+xml",
+        href: "/img/favicon.svg",
+      },
+    },
+    {
+      tagName: "link",
+      attributes: {
+        rel: "apple-touch-icon",
+        sizes: "180x180",
+        href: "/img/apple-touch-icon.png",
+      },
+    },
+  ],
+
   presets: [
     [
       "classic",
@@ -51,7 +70,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: "img/docusaurus-social-card.jpg",
+    image: "img/unambitiousfx-social-card.png",
     colorMode: {
       defaultMode: "dark",
       disableSwitch: false,
@@ -61,7 +80,8 @@ const config: Config = {
       title: "UnambitiousFx",
       logo: {
         alt: "UnambitiousFx Logo",
-        src: "img/unambitiousfx_logo.svg",
+        src: "img/unambitiousfx-icon-light.svg",
+        srcDark: "img/unambitiousfx-icon-dark.svg",
       },
       items: [
         {
