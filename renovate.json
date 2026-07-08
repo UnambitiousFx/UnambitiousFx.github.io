@@ -3,7 +3,15 @@
   "extends": [
     "config:recommended"
   ],
+  "schedule": [
+    "before 4am on monday"
+  ],
+  "prConcurrentLimit": 10,
   "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
     {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "matchPackagePatterns": ["@docusaurus/*"],
