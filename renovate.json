@@ -14,15 +14,20 @@
     },
     {
       "matchDepTypes": ["dependencies", "devDependencies"],
-      "matchPackagePatterns": ["@docusaurus/*"],
       "groupName": "docusaurus",
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": [
+        "/@docusaurus/*/"
+      ]
     },
     {
       "matchDepTypes": ["dependencies", "devDependencies"],
-      "matchPackagePatterns": ["react", "react-dom"],
       "groupName": "react",
-      "automerge": false
+      "automerge": false,
+      "matchPackageNames": [
+        "/react/",
+        "/react-dom/"
+      ]
     }
   ],
   "lockFileMaintenance": {
