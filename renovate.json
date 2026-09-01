@@ -13,9 +13,14 @@
       "automerge": true
     },
     {
+      "matchUpdateTypes": ["major"],
+      "reviewers": ["Oleexo"]
+    },
+    {
       "matchDepTypes": ["dependencies", "devDependencies"],
       "groupName": "docusaurus",
       "automerge": false,
+      "reviewers": ["Oleexo"],
       "matchPackageNames": [
         "/@docusaurus/*/"
       ]
@@ -24,6 +29,7 @@
       "matchDepTypes": ["dependencies", "devDependencies"],
       "groupName": "react",
       "automerge": false,
+      "reviewers": ["Oleexo"],
       "matchPackageNames": [
         "/react/",
         "/react-dom/"
