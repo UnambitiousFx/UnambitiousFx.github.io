@@ -213,7 +213,24 @@ const config: Config = {
 
   plugins: [...projects.map(projectDocs), llms],
 
-  themes: ["@docusaurus/theme-mermaid"],
+  themes: [
+    "@docusaurus/theme-mermaid",
+    [
+      "@easyops-cn/docusaurus-search-local",
+      {
+        hashed: true,
+        indexBlog: false,
+        docsRouteBasePath: projects.map(({ id }) => id),
+        docsDir: projects.map(({ id }) => `projects/${id}/docs`),
+        // On a library's pages, search that library; elsewhere (home page), search all of them.
+        searchContextByPaths: projects.map(({ id, name }) => ({ label: name, path: id })),
+        useAllContextsWithNoSearchContext: true,
+        // Required without a "default" docs instance; only picks which version's index the
+        // search page loads, and every project's current docs share the root index.
+        docsPluginIdForPreferredVersion: projects[0].id,
+      },
+    ],
+  ],
   markdown: { mermaid: true },
 
   themeConfig: {
