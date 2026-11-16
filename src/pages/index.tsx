@@ -251,6 +251,25 @@ function LibrariesSection() {
               </span>
             </Link>
           </article>
+          <article
+            className={styles.libraryCard}
+            data-reveal=""
+            style={{ "--delay": 4 } as React.CSSProperties}
+          >
+            <p className={styles.libraryName}>nuget-releaser</p>
+            <p className={styles.libraryDesc}>
+              Release tool that versions, packs and publishes each NuGet package of a repository independently.
+            </p>
+            <Link
+              className={styles.libraryLink}
+              to="/nuget-releaser/"
+            >
+              Explore nuget-releaser{" "}
+              <span className={styles.arrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </article>
         </div>
       </div>
     </section>
