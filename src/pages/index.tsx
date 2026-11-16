@@ -196,10 +196,7 @@ function LibrariesSection() {
             data-reveal=""
             style={{ "--delay": 1 } as React.CSSProperties}
           >
-            <div className={styles.libraryNameRow}>
-              <p className={styles.libraryName}>Synapse</p>
-              <span className={styles.wipBadge}>WIP</span>
-            </div>
+            <p className={styles.libraryName}>Synapse</p>
             <p className={styles.libraryDesc}>
               A lightweight in-process mediator and message-driven primitives.
             </p>
