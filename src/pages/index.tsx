@@ -183,7 +183,7 @@ function LibrariesSection() {
             </p>
             <Link
               className={styles.libraryLink}
-              href="https://functional.unambitiousfx.com"
+              to="/functional/"
             >
               Explore Functional{" "}
               <span className={styles.arrow} aria-hidden="true">

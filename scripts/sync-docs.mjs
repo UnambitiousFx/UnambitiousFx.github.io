@@ -23,6 +23,12 @@ const projects = [
     docs: 'docs/docs',
     sidebars: 'docs/sidebars.ts',
   },
+  {
+    id: 'functional',
+    repo: 'https://github.com/UnambitiousFx/Functional.git',
+    docs: 'docs/docs',
+    sidebars: 'docs/sidebars.ts',
+  },
 ];
 
 const site = path.resolve(import.meta.dirname, '..');
@@ -47,12 +53,21 @@ function openRepo(project) {
   return { dir, current: 'origin/HEAD' };
 }
 
-// Latest stable tag per major, newest major first.
-function pickVersions(dir) {
+const hasPath = (dir, ref, p) => {
+  try {
+    execFileSync('git', ['cat-file', '-e', `${ref}:${p}`], { cwd: dir, stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// Latest stable tag per major that has docs, newest major first.
+function pickVersions(dir, docsPath) {
   const latest = new Map();
   for (const tag of git(dir, 'tag', '--list', 'v*').split('\n')) {
     const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag.trim());
-    if (!m) {
+    if (!m || !hasPath(dir, m[0], docsPath)) {
       continue;
     }
     const [major, minor, patch] = m.slice(1).map(Number);
@@ -66,17 +81,34 @@ function pickVersions(dir) {
     .map(([major, { tag }]) => ({ name: `${major}.x`, tag }));
 }
 
-function exportDocs(dir, ref, docsPath, dest) {
+function exportDocs(dir, ref, docsPath, dest, base) {
   fs.rmSync(dest, { recursive: true, force: true });
   if (ref === null) {
     fs.cpSync(path.join(dir, docsPath), dest, { recursive: true });
-    return;
+  } else {
+    fs.mkdirSync(dest, { recursive: true });
+    const tar = path.join(cache, 'export.tar');
+    git(dir, 'archive', '--format=tar', '-o', tar, ref, docsPath);
+    execFileSync('tar', ['-xf', tar, '-C', dest, `--strip-components=${docsPath.split('/').length}`]);
+    fs.rmSync(tar);
   }
-  fs.mkdirSync(dest, { recursive: true });
-  const tar = path.join(cache, 'export.tar');
-  git(dir, 'archive', '--format=tar', '-o', tar, ref, docsPath);
-  execFileSync('tar', ['-xf', tar, '-C', dest, `--strip-components=${docsPath.split('/').length}`]);
-  fs.rmSync(tar);
+  rewriteRootLinks(dest, base);
+}
+
+// Projects used to be served from their own subdomain root, so their docs (old tags
+// included) link to `/docs/...`; point those links at this version's route instead.
+function rewriteRootLinks(dir, base) {
+  for (const file of fs.readdirSync(dir, { recursive: true })) {
+    if (!/\.mdx?$/.test(file)) {
+      continue;
+    }
+    const p = path.join(dir, file);
+    const text = fs.readFileSync(p, 'utf8');
+    const out = text.replace(/(\]\(|href=")\/docs\//g, `$1${base}/`);
+    if (out !== text) {
+      fs.writeFileSync(p, out);
+    }
+  }
 }
 
 // sidebars.ts only uses `import type`, so Node's built-in type stripping can load it.
@@ -99,12 +131,12 @@ async function exportSidebars(dir, ref, sidebarsPath, dest) {
 
 for (const project of projects) {
   const { dir, current } = openRepo(project);
-  const [latest, ...versions] = pickVersions(dir);
+  const [latest, ...versions] = pickVersions(dir, project.docs);
   const projectDir = path.join(site, 'projects', project.id);
   const versionedDocs = path.join(site, `${project.id}_versioned_docs`);
   const versionedSidebars = path.join(site, `${project.id}_versioned_sidebars`);
 
-  exportDocs(dir, current, project.docs, path.join(projectDir, 'docs'));
+  exportDocs(dir, current, project.docs, path.join(projectDir, 'docs'), `/${project.id}`);
   await exportSidebars(dir, current, project.sidebars, path.join(projectDir, 'sidebars.json'));
   const label = latest?.name ?? 'Next';
   fs.writeFileSync(path.join(projectDir, 'version.json'), JSON.stringify({ label }));
@@ -112,7 +144,13 @@ for (const project of projects) {
   fs.rmSync(versionedDocs, { recursive: true, force: true });
   fs.rmSync(versionedSidebars, { recursive: true, force: true });
   for (const { name, tag } of versions) {
-    exportDocs(dir, tag, project.docs, path.join(versionedDocs, `version-${name}`));
+    exportDocs(
+      dir,
+      tag,
+      project.docs,
+      path.join(versionedDocs, `version-${name}`),
+      `/${project.id}/${name}`,
+    );
     await exportSidebars(
       dir,
       tag,
