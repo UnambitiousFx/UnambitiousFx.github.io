@@ -29,6 +29,18 @@ const projects = [
     docs: 'docs/docs',
     sidebars: 'docs/sidebars.ts',
   },
+  {
+    id: 'engram',
+    repo: 'https://github.com/UnambitiousFx/Engram.git',
+    docs: 'docs/docs',
+    sidebars: 'docs/sidebars.ts',
+  },
+  {
+    id: 'myelin',
+    repo: 'https://github.com/UnambitiousFx/Myelin.git',
+    docs: 'docs/docs',
+    sidebars: 'docs/sidebars.ts',
+  },
 ];
 
 const site = path.resolve(import.meta.dirname, '..');

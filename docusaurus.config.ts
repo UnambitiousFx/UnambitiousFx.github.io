@@ -105,7 +105,12 @@ const config: Config = {
     ],
   ],
 
-  plugins: [projectDocs("functional", "Functional"), projectDocs("synapse", "Synapse")],
+  plugins: [
+    projectDocs("functional", "Functional"),
+    projectDocs("synapse", "Synapse"),
+    projectDocs("engram", "Engram"),
+    projectDocs("myelin", "Myelin"),
+  ],
 
   themes: ["@docusaurus/theme-mermaid"],
   markdown: { mermaid: true },
@@ -128,6 +133,8 @@ const config: Config = {
       items: [
         ...projectNavItems("functional", "Functional"),
         ...projectNavItems("synapse", "Synapse"),
+        ...projectNavItems("engram", "Engram"),
+        ...projectNavItems("myelin", "Myelin"),
         {
           href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
           label: "GitHub",
@@ -148,6 +155,14 @@ const config: Config = {
             {
               label: "Synapse",
               to: "/synapse/",
+            },
+            {
+              label: "Engram",
+              to: "/engram/",
+            },
+            {
+              label: "Myelin",
+              to: "/myelin/",
             },
           ],
         },

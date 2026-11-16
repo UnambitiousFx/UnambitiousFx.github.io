@@ -213,6 +213,44 @@ function LibrariesSection() {
               </span>
             </Link>
           </article>
+          <article
+            className={styles.libraryCard}
+            data-reveal=""
+            style={{ "--delay": 2 } as React.CSSProperties}
+          >
+            <p className={styles.libraryName}>Engram</p>
+            <p className={styles.libraryDesc}>
+              RFC 8785 JSON canonicalization and content fingerprints for .NET.
+            </p>
+            <Link
+              className={styles.libraryLink}
+              to="/engram/"
+            >
+              Explore Engram{" "}
+              <span className={styles.arrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </article>
+          <article
+            className={styles.libraryCard}
+            data-reveal=""
+            style={{ "--delay": 3 } as React.CSSProperties}
+          >
+            <p className={styles.libraryName}>Myelin</p>
+            <p className={styles.libraryDesc}>
+              SSRF-safe outbound HttpClient that refuses private, loopback and link-local destinations.
+            </p>
+            <Link
+              className={styles.libraryLink}
+              to="/myelin/"
+            >
+              Explore Myelin{" "}
+              <span className={styles.arrow} aria-hidden="true">
+                →
+              </span>
+            </Link>
+          </article>
         </div>
       </div>
     </section>
