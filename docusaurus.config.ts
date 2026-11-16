@@ -1,6 +1,12 @@
 import type * as Preset from "@docusaurus/preset-classic";
 import type { Config } from "@docusaurus/types";
+import { readFileSync } from "node:fs";
 import { themes as prismThemes } from "prism-react-renderer";
+
+// Written by scripts/sync-docs.mjs: the major that main currently documents.
+const synapseLabel: string = JSON.parse(
+  readFileSync("projects/synapse/version.json", "utf8"),
+).label;
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -77,8 +83,9 @@ const config: Config = {
         path: "projects/synapse/docs",
         routeBasePath: "synapse",
         sidebarPath: "./projects/synapse/sidebars.json",
-        versions: { current: { label: "Next", path: "next" } },
-        // Released versions are git tags: only the default branch is editable.
+        lastVersion: "current",
+        versions: { current: { label: synapseLabel } },
+        // Older majors are git tags: only the default branch is editable.
         editUrl: ({ version, docPath }) =>
           version === "current"
             ? `https://github.com/UnambitiousFx/Synapse/edit/main/docs/docs/${docPath}`

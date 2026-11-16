@@ -1,10 +1,14 @@
 // Pulls each project's docs out of its git history into the file layout that
 // Docusaurus multi-instance versioning expects, so no snapshot is ever committed here.
 //
-//   projects/<id>/docs + sidebars.json      ← default branch ("Next")
-//   <id>_versions.json                      ← one version per major (latest stable tag)
+//   projects/<id>/docs + sidebars.json      ← default branch, served as the latest major
+//   projects/<id>/version.json              ← its label, from the latest stable tag
+//   <id>_versions.json                      ← older majors (latest stable tag of each)
 //   <id>_versioned_docs/version-<N>.x/
 //   <id>_versioned_sidebars/version-<N>.x-sidebars.json
+//
+// Every release is tagged on merge to main, so main *is* the latest major plus
+// unreleased `docs:` fixes; snapshotting its tag would only hide those fixes.
 //
 // Local preview of uncommitted docs: SYNAPSE_REPO=../Synapse pnpm start
 import { execFileSync } from 'node:child_process';
@@ -95,13 +99,15 @@ async function exportSidebars(dir, ref, sidebarsPath, dest) {
 
 for (const project of projects) {
   const { dir, current } = openRepo(project);
-  const versions = pickVersions(dir);
+  const [latest, ...versions] = pickVersions(dir);
   const projectDir = path.join(site, 'projects', project.id);
   const versionedDocs = path.join(site, `${project.id}_versioned_docs`);
   const versionedSidebars = path.join(site, `${project.id}_versioned_sidebars`);
 
   exportDocs(dir, current, project.docs, path.join(projectDir, 'docs'));
   await exportSidebars(dir, current, project.sidebars, path.join(projectDir, 'sidebars.json'));
+  const label = latest?.name ?? 'Next';
+  fs.writeFileSync(path.join(projectDir, 'version.json'), JSON.stringify({ label }));
 
   fs.rmSync(versionedDocs, { recursive: true, force: true });
   fs.rmSync(versionedSidebars, { recursive: true, force: true });
@@ -119,5 +125,5 @@ for (const project of projects) {
     JSON.stringify(versions.map((v) => v.name), null, 2),
   );
 
-  console.log(`${project.id}: next + ${versions.map((v) => `${v.name} (${v.tag})`).join(', ')}`);
+  console.log(`${project.id}: ${label} (main) + ${versions.map((v) => `${v.name} (${v.tag})`).join(', ')}`);
 }
