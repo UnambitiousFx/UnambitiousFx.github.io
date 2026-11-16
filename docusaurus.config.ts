@@ -68,6 +68,28 @@ const config: Config = {
     ],
   ],
 
+  // One docs instance per project; content and versions come from scripts/sync-docs.mjs.
+  plugins: [
+    [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "synapse",
+        path: "projects/synapse/docs",
+        routeBasePath: "synapse",
+        sidebarPath: "./projects/synapse/sidebars.json",
+        versions: { current: { label: "Next", path: "next" } },
+        // Released versions are git tags: only the default branch is editable.
+        editUrl: ({ version, docPath }) =>
+          version === "current"
+            ? `https://github.com/UnambitiousFx/Synapse/edit/main/docs/docs/${docPath}`
+            : undefined,
+      },
+    ],
+  ],
+
+  themes: ["@docusaurus/theme-mermaid"],
+  markdown: { mermaid: true },
+
   themeConfig: {
     // Replace with your project's social card
     image: "img/unambitiousfx-social-card.png",
@@ -90,9 +112,16 @@ const config: Config = {
           position: "left",
         },
         {
-          href: "https://synapse.unambitiousfx.com",
+          type: "docSidebar",
+          docsPluginId: "synapse",
+          sidebarId: "tutorialSidebar",
           label: "Synapse",
           position: "left",
+        },
+        {
+          type: "docsVersionDropdown",
+          docsPluginId: "synapse",
+          position: "right",
         },
         {
           href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
@@ -113,7 +142,7 @@ const config: Config = {
             },
             {
               label: "Synapse",
-              href: "https://synapse.unambitiousfx.com",
+              to: "/synapse/",
             },
           ],
         },
@@ -132,6 +161,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["csharp"],
     },
   } satisfies Preset.ThemeConfig,
 };
