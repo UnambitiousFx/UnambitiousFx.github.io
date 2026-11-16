@@ -1,0 +1,66 @@
+name: Check docs
+
+# Called from each library's pull requests: builds this site with the library's docs taken from the
+# calling checkout, so a broken link or invalid MDX fails the library PR instead of the site deploy
+# (`onBrokenLinks: "throw"` stops the whole site, every library included).
+on:
+  workflow_call:
+    inputs:
+      project-id:
+        description: The library's id in scripts/sync-docs.mjs (e.g. synapse, nuget-releaser).
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build docs site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v7
+        with:
+          repository: UnambitiousFx/UnambitiousFx.github.io
+          path: site
+
+      # The caller's checkout; full history because older majors are read from its tags.
+      - name: Checkout library
+        uses: actions/checkout@v7
+        with:
+          path: project
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 12
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+          cache-dependency-path: site/pnpm-lock.yaml
+
+      - name: Install dependencies
+        working-directory: site
+        run: pnpm install --frozen-lockfile
+
+      # sync-docs.mjs reads <ID>_REPO (id upper-cased, non-word characters as `_`) for a local checkout.
+      - name: Build
+        working-directory: site
+        env:
+          PROJECT_ID: ${{ inputs.project-id }}
+        run: |
+          # A library's first docs PR lands before the site lists it; warn instead of failing so the
+          # two PRs do not block each other.
+          if ! grep -q "id: '$PROJECT_ID'," scripts/sync-docs.mjs; then
+            echo "::warning::'$PROJECT_ID' is not in scripts/sync-docs.mjs yet, so its docs were not built."
+            exit 0
+          fi
+          var="$(echo "$PROJECT_ID" | tr '[:lower:]' '[:upper:]' | tr -c 'A-Z0-9\n' '_')_REPO"
+          env "$var=$GITHUB_WORKSPACE/project" pnpm run build
