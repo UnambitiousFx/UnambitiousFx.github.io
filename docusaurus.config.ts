@@ -1,12 +1,43 @@
+import type { Options as DocsOptions } from "@docusaurus/plugin-content-docs";
 import type * as Preset from "@docusaurus/preset-classic";
-import type { Config } from "@docusaurus/types";
+import type { Config, PluginConfig } from "@docusaurus/types";
 import { readFileSync } from "node:fs";
 import { themes as prismThemes } from "prism-react-renderer";
 
-// Written by scripts/sync-docs.mjs: the major that main currently documents.
-const synapseLabel: string = JSON.parse(
-  readFileSync("projects/synapse/version.json", "utf8"),
-).label;
+// One docs instance per project, served at /<id>/; scripts/sync-docs.mjs writes its
+// content, its older majors and version.json (the major that main currently documents).
+const projectDocs = (id: string, repo: string): PluginConfig => [
+  "@docusaurus/plugin-content-docs",
+  {
+    id,
+    path: `projects/${id}/docs`,
+    routeBasePath: id,
+    sidebarPath: `./projects/${id}/sidebars.json`,
+    lastVersion: "current",
+    versions: {
+      current: {
+        label: JSON.parse(readFileSync(`projects/${id}/version.json`, "utf8")).label,
+      },
+    },
+    // Older majors are git tags: only the default branch is editable.
+    editUrl: ({ version, docPath }) =>
+      version === "current"
+        ? `https://github.com/UnambitiousFx/${repo}/edit/main/docs/docs/${docPath}`
+        : undefined,
+  } satisfies DocsOptions,
+];
+
+const projectNavItems = (id: string, label: string) => [
+  {
+    type: "docSidebar",
+    docsPluginId: id,
+    sidebarId: "tutorialSidebar",
+    label,
+    position: "left",
+  } as const,
+  // Hidden outside this project's docs by src/theme/NavbarItem/DocsVersionDropdownNavbarItem.
+  { type: "docsVersionDropdown", docsPluginId: id, position: "right" } as const,
+];
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
@@ -74,25 +105,7 @@ const config: Config = {
     ],
   ],
 
-  // One docs instance per project; content and versions come from scripts/sync-docs.mjs.
-  plugins: [
-    [
-      "@docusaurus/plugin-content-docs",
-      {
-        id: "synapse",
-        path: "projects/synapse/docs",
-        routeBasePath: "synapse",
-        sidebarPath: "./projects/synapse/sidebars.json",
-        lastVersion: "current",
-        versions: { current: { label: synapseLabel } },
-        // Older majors are git tags: only the default branch is editable.
-        editUrl: ({ version, docPath }) =>
-          version === "current"
-            ? `https://github.com/UnambitiousFx/Synapse/edit/main/docs/docs/${docPath}`
-            : undefined,
-      },
-    ],
-  ],
+  plugins: [projectDocs("functional", "Functional"), projectDocs("synapse", "Synapse")],
 
   themes: ["@docusaurus/theme-mermaid"],
   markdown: { mermaid: true },
@@ -113,23 +126,8 @@ const config: Config = {
         srcDark: "img/unambitiousfx-icon-dark.svg",
       },
       items: [
-        {
-          href: "https://functional.unambitiousfx.com",
-          label: "Functional",
-          position: "left",
-        },
-        {
-          type: "docSidebar",
-          docsPluginId: "synapse",
-          sidebarId: "tutorialSidebar",
-          label: "Synapse",
-          position: "left",
-        },
-        {
-          type: "docsVersionDropdown",
-          docsPluginId: "synapse",
-          position: "right",
-        },
+        ...projectNavItems("functional", "Functional"),
+        ...projectNavItems("synapse", "Synapse"),
         {
           href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
           label: "GitHub",
@@ -145,7 +143,7 @@ const config: Config = {
           items: [
             {
               label: "Functional",
-              href: "https://functional.unambitiousfx.com",
+              to: "/functional/",
             },
             {
               label: "Synapse",

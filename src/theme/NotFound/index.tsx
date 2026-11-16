@@ -3,11 +3,11 @@ import Layout from "@theme/Layout";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
-// Redirect map: internal route prefix → external subdomain root
+// Redirect map: legacy route prefix → current docs root
 const REDIRECTS: Array<{ prefix: string; target: string }> = [
-  { prefix: "/lib-functional/", target: "https://functional.unambitiousfx.com" },
-  { prefix: "/lib-synapse/", target: "https://synapse.unambitiousfx.com" },
-  { prefix: "/docs/", target: "https://functional.unambitiousfx.com" },
+  { prefix: "/lib-functional/", target: "/functional" },
+  { prefix: "/lib-synapse/", target: "/synapse" },
+  { prefix: "/docs/", target: "/functional" },
 ];
 
 function tryRedirect(): boolean {
