@@ -102,6 +102,11 @@ const projects = [
       customLLMFiles: [],
     },
   },
+  {
+    id: "nuget-releaser",
+    name: "nuget-releaser",
+    llms: { includeOrder: ["index.mdx"], customLLMFiles: [] },
+  },
 ];
 
 const latestLabel = (id: string): string =>

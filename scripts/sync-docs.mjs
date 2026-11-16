@@ -11,6 +11,7 @@
 // unreleased `docs:` fixes; snapshotting its tag would only hide those fixes.
 //
 // Local preview of uncommitted docs: SYNAPSE_REPO=../Synapse pnpm start
+// (the variable is the id upper-cased, non-word characters as `_`: NUGET_RELEASER_REPO)
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -41,6 +42,12 @@ const projects = [
     docs: 'docs/docs',
     sidebars: 'docs/sidebars.ts',
   },
+  {
+    id: 'nuget-releaser',
+    repo: 'https://github.com/UnambitiousFx/nuget-releaser.git',
+    docs: 'docs/docs',
+    sidebars: 'docs/sidebars.ts',
+  },
 ];
 
 const site = path.resolve(import.meta.dirname, '..');
@@ -50,7 +57,7 @@ const git = (cwd, ...args) =>
   execFileSync('git', args, { cwd, encoding: 'utf8', maxBuffer: 1 << 28 });
 
 function openRepo(project) {
-  const local = process.env[`${project.id.toUpperCase()}_REPO`];
+  const local = process.env[`${project.id.toUpperCase().replace(/\W/g, '_')}_REPO`];
   if (local) {
     return { dir: path.resolve(local), current: null };
   }
@@ -74,12 +81,12 @@ const hasPath = (dir, ref, p) => {
   }
 };
 
-// Latest stable tag per major that has docs, newest major first.
-function pickVersions(dir, docsPath) {
+// Latest stable tag per major, newest major first.
+function pickVersions(dir) {
   const latest = new Map();
   for (const tag of git(dir, 'tag', '--list', 'v*').split('\n')) {
     const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag.trim());
-    if (!m || !hasPath(dir, m[0], docsPath)) {
+    if (!m) {
       continue;
     }
     const [major, minor, patch] = m.slice(1).map(Number);
@@ -143,7 +150,9 @@ async function exportSidebars(dir, ref, sidebarsPath, dest) {
 
 for (const project of projects) {
   const { dir, current } = openRepo(project);
-  const [latest, ...versions] = pickVersions(dir, project.docs);
+  // The latest tag only names main's version; older majors are served from their tag, so need docs there.
+  const [latest, ...older] = pickVersions(dir);
+  const versions = older.filter((v) => hasPath(dir, v.tag, project.docs));
   const projectDir = path.join(site, 'projects', project.id);
   const versionedDocs = path.join(site, `${project.id}_versioned_docs`);
   const versionedSidebars = path.join(site, `${project.id}_versioned_sidebars`);
