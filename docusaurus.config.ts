@@ -4,9 +4,110 @@ import type { Config, PluginConfig } from "@docusaurus/types";
 import { readFileSync } from "node:fs";
 import { themes as prismThemes } from "prism-react-renderer";
 
-// One docs instance per project, served at /<id>/; scripts/sync-docs.mjs writes its
-// content, its older majors and version.json (the major that main currently documents).
-const projectDocs = (id: string, repo: string): PluginConfig => [
+// Each library repo's docs, served at /<id>/. scripts/sync-docs.mjs pulls their content
+// (main + the latest tag of each older major) and writes version.json, the major main documents.
+const projects = [
+  {
+    id: "functional",
+    name: "Functional",
+    llms: {
+      includeOrder: [
+        "index.mdx",
+        "getting-started.mdx",
+        "result/index.mdx",
+        "result/api-reference.mdx",
+        "maybe/index.mdx",
+        "maybe/api-reference.mdx",
+        "failures-and-metadata.mdx",
+        "aspnetcore/index.mdx",
+        "xunit/index.mdx",
+      ],
+      customLLMFiles: [
+        {
+          filename: "llms-result.txt",
+          includePatterns: ["result/**", "maybe/**", "failures-and-metadata.mdx"],
+          fullContent: true,
+          title: "Functional — Result, Maybe & Failures",
+          description:
+            "The Result and Maybe types, railway-oriented composition, and the failure model.",
+        },
+        {
+          filename: "llms-testing.txt",
+          includePatterns: ["xunit/**"],
+          fullContent: true,
+          title: "Functional — Testing with Functional.xunit",
+          description: "Fluent assertions for Result and Maybe in xUnit tests.",
+        },
+      ],
+    },
+  },
+  {
+    id: "synapse",
+    name: "Synapse",
+    llms: {
+      includeOrder: [
+        "index.mdx",
+        "getting-started.mdx",
+        "commands-and-queries.mdx",
+        "events.mdx",
+        "pipelines.mdx",
+      ],
+      customLLMFiles: [
+        {
+          filename: "llms-pipelines.txt",
+          includePatterns: [
+            "pipelines.mdx",
+            "validation.mdx",
+            "authorization.mdx",
+            "error-handling.mdx",
+          ],
+          fullContent: true,
+          title: "Synapse Pipelines & Behaviors",
+          description: "Pipeline behaviors, validation, authorization, and error handling.",
+        },
+        {
+          filename: "llms-outbox.txt",
+          includePatterns: [
+            "outbox.mdx",
+            "outbox-entityframeworkcore.mdx",
+            "events.mdx",
+            "observability.mdx",
+          ],
+          fullContent: true,
+          title: "Synapse Events, Outbox & Observability",
+          description: "Event publishing, the outbox pattern, and observability.",
+        },
+      ],
+    },
+  },
+  {
+    id: "engram",
+    name: "Engram",
+    llms: {
+      includeOrder: ["index.mdx", "getting-started.mdx", "canonicalization.mdx", "fingerprints.mdx"],
+      customLLMFiles: [],
+    },
+  },
+  {
+    id: "myelin",
+    name: "Myelin",
+    llms: {
+      includeOrder: [
+        "index.mdx",
+        "getting-started.mdx",
+        "address-policy.mdx",
+        "safe-http-client.mdx",
+        "http-client-factory.mdx",
+      ],
+      customLLMFiles: [],
+    },
+  },
+];
+
+const latestLabel = (id: string): string =>
+  JSON.parse(readFileSync(`projects/${id}/version.json`, "utf8")).label;
+
+const projectDocs = ({ id, name }: (typeof projects)[number]): PluginConfig => [
   "@docusaurus/plugin-content-docs",
   {
     id,
@@ -14,29 +115,34 @@ const projectDocs = (id: string, repo: string): PluginConfig => [
     routeBasePath: id,
     sidebarPath: `./projects/${id}/sidebars.json`,
     lastVersion: "current",
-    versions: {
-      current: {
-        label: JSON.parse(readFileSync(`projects/${id}/version.json`, "utf8")).label,
-      },
-    },
+    versions: { current: { label: latestLabel(id) } },
     // Older majors are git tags: only the default branch is editable.
     editUrl: ({ version, docPath }) =>
       version === "current"
-        ? `https://github.com/UnambitiousFx/${repo}/edit/main/docs/docs/${docPath}`
+        ? `https://github.com/UnambitiousFx/${name}/edit/main/docs/docs/${docPath}`
         : undefined,
   } satisfies DocsOptions,
 ];
 
-const projectNavItems = (id: string, label: string) => [
+// One set of llms files per project under /<id>/ (llms.txt, llms-full.txt and its custom
+// files), from the docs main currently serves. The plugin's "versions" are its output sets.
+const llms: PluginConfig = [
+  "docusaurus-plugin-llms",
   {
-    type: "docSidebar",
-    docsPluginId: id,
-    sidebarId: "tutorialSidebar",
-    label,
-    position: "left",
-  } as const,
-  // Hidden outside this project's docs by src/theme/NavbarItem/DocsVersionDropdownNavbarItem.
-  { type: "docsVersionDropdown", docsPluginId: id, position: "right" } as const,
+    generateLLMsTxt: true,
+    generateLLMsFullTxt: true,
+    excludeImports: true,
+    removeDuplicateHeadings: true,
+    includeUnmatchedLast: true,
+    versions: projects.map(({ id, name, llms }) => ({
+      name: id,
+      label: `${name} ${latestLabel(id)}`,
+      docsDir: [{ path: `projects/${id}/docs`, routeBasePath: id }],
+      path: id,
+      routePrefix: "",
+      ...llms,
+    })),
+  },
 ];
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
@@ -105,12 +211,7 @@ const config: Config = {
     ],
   ],
 
-  plugins: [
-    projectDocs("functional", "Functional"),
-    projectDocs("synapse", "Synapse"),
-    projectDocs("engram", "Engram"),
-    projectDocs("myelin", "Myelin"),
-  ],
+  plugins: [...projects.map(projectDocs), llms],
 
   themes: ["@docusaurus/theme-mermaid"],
   markdown: { mermaid: true },
@@ -131,10 +232,17 @@ const config: Config = {
         srcDark: "img/unambitiousfx-icon-dark.svg",
       },
       items: [
-        ...projectNavItems("functional", "Functional"),
-        ...projectNavItems("synapse", "Synapse"),
-        ...projectNavItems("engram", "Engram"),
-        ...projectNavItems("myelin", "Myelin"),
+        ...projects.flatMap(({ id, name }) => [
+          {
+            type: "docSidebar",
+            docsPluginId: id,
+            sidebarId: "tutorialSidebar",
+            label: name,
+            position: "left",
+          } as const,
+          // Hidden outside this project's docs by src/theme/NavbarItem/DocsVersionDropdownNavbarItem.
+          { type: "docsVersionDropdown", docsPluginId: id, position: "right" } as const,
+        ]),
         {
           href: "https://github.com/unambitiousfx/unambitiousfx.github.io",
           label: "GitHub",
@@ -147,24 +255,7 @@ const config: Config = {
       links: [
         {
           title: "Libraries",
-          items: [
-            {
-              label: "Functional",
-              to: "/functional/",
-            },
-            {
-              label: "Synapse",
-              to: "/synapse/",
-            },
-            {
-              label: "Engram",
-              to: "/engram/",
-            },
-            {
-              label: "Myelin",
-              to: "/myelin/",
-            },
-          ],
+          items: projects.map(({ id, name }) => ({ label: name, to: `/${id}/` })),
         },
         {
           title: "More",
