@@ -205,7 +205,7 @@ function LibrariesSection() {
             </p>
             <Link
               className={styles.libraryLink}
-              href="https://synapse.unambitiousfx.com"
+              to="/synapse/"
             >
               Explore Synapse{" "}
               <span className={styles.arrow} aria-hidden="true">

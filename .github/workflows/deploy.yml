@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+  # Safety net: library releases trigger this workflow, but a missed trigger is caught overnight.
+  schedule:
+    - cron: "0 3 * * *"
+
   workflow_dispatch:
 
 permissions:
