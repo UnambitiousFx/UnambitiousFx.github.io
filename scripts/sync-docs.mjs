@@ -130,6 +130,26 @@ function rewriteRootLinks(dir, base) {
   }
 }
 
+// A category holding a single doc renders as a heading that repeats it ("Getting Started" >
+// "Getting Started"); show just the doc under the category's label. Done here rather than in each
+// repo so frozen release tags get it too.
+function flattenSingleDocCategories(items) {
+  return items.map((item) => {
+    if (item?.type !== 'category') {
+      return item;
+    }
+    const children = flattenSingleDocCategories(item.items ?? []);
+    const only = children.length === 1 && !item.link ? children[0] : undefined;
+    if (typeof only === 'string') {
+      return { type: 'doc', id: only, label: item.label };
+    }
+    if (only?.type === 'doc') {
+      return { ...only, label: item.label };
+    }
+    return { ...item, items: children };
+  });
+}
+
 // sidebars.ts only uses `import type`, so Node's built-in type stripping can load it.
 async function exportSidebars(dir, ref, sidebarsPath, dest) {
   const source =
@@ -142,7 +162,13 @@ async function exportSidebars(dir, ref, sidebarsPath, dest) {
   try {
     const { default: sidebars } = await import(pathToFileURL(tmp).href);
     fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.writeFileSync(dest, JSON.stringify(sidebars, null, 2));
+    const flat = Object.fromEntries(
+      Object.entries(sidebars).map(([id, items]) => [
+        id,
+        Array.isArray(items) ? flattenSingleDocCategories(items) : items,
+      ]),
+    );
+    fs.writeFileSync(dest, JSON.stringify(flat, null, 2));
   } finally {
     fs.rmSync(tmp);
   }
